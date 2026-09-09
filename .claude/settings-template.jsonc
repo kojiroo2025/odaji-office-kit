@@ -28,11 +28,14 @@
       // これを入れると、ファイルの削除はあなたの手作業になります。
       // 「不便だ」と感じたら外せますが、外す前に第9号のバックアップが
       // 動いていることを確かめてください。
+      // 【Windowsをお使いの方へ・大事なところ】
+      // Windows では、AI従業員が主に使うのは PowerShell です（Git Bash が
+      // 入っていても、claude.ai のアカウントなら既定でそちらが主になります）。
+      // **Bash 側だけを塞いでも、PowerShell 経由で通ってしまいます。**
+      // そのため、以下は Bash と PowerShell を必ず対で書いています。
+      // Mac・Linux をお使いの方は、PowerShell の行を消して構いません。
       "Bash(rm *)",
       "Bash(rmdir *)",
-      "Bash(del *)",
-
-      // Windowsをお使いの方へ。PowerShell からの削除も塞ぎます。
       "PowerShell(Remove-Item *)",
 
       // --- 2. 変更履歴そのものを壊す操作 ---------------------------
@@ -40,6 +43,8 @@
       // 保険をかけた相手に、保険を壊させないという趣旨です。
       "Bash(git reset *)",
       "Bash(git clean *)",
+      "PowerShell(git reset *)",
+      "PowerShell(git clean *)",
 
       // --- 3. 機密情報を読むこと -----------------------------------
       // 第9号で、接続の鍵をデジタルオフィスの外へ移しました。
@@ -57,6 +62,11 @@
       // 調べ物は、この下の allow で許した相手だけができます。
       "Bash(curl *)",
       "Bash(wget *)",
+      // PowerShell では curl・wget・iwr は Invoke-WebRequest の別名で、
+      // irm は Invoke-RestMethod の別名です。別名は自動でまとめて扱われるので、
+      // 本来の名前を1つ書けば全部塞げます。
+      "PowerShell(Invoke-WebRequest *)",
+      "PowerShell(Invoke-RestMethod *)",
 
       // --- 5. パソコンの設定そのものを変えること -------------------
       "Bash(sudo *)"

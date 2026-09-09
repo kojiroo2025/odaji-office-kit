@@ -1,0 +1,47 @@
+# 変更履歴
+
+オフィス開設キットの変更を、新しい版から順に記録します。
+
+このファイルは、キットに入っている「更新確認」（`.claude/skills/kit-update/`）が
+機械的に読みます。次の3つの決まりを守って書きます。
+
+1. 見出しは `## 版番号 ― 日付` の形にする。日付は `YYYY-MM-DD`
+2. 新しい版ほど上に書く
+3. 各版の中は「追加」「変更」「修正」「削除」の見出しに分け、1行に1件だけ書く
+
+版番号の上げ方
+  一番右の数字（0.1.**0**）＝ 誤字や説明の書き直し。手元に当てなくても困りません
+  真ん中の数字（0.**1**.0）＝ ファイルの追加や中身の変更。当てる価値があります
+  一番左の数字（**0**.1.0）＝ 使い方が変わる大きな改訂。当てる前に説明を読んでください
+
+---
+
+## 0.1.0 ― 未リリース
+
+初版。ニュースレター「一人社長とAI従業員」の準備編（第2号〜第12号）で
+作ってきたファイルを、一式まとめたものです。
+
+### 追加
+
+- `README.md` 最初に読む1枚
+- `START_HERE.md` 開設の進め方（AI従業員に読ませる台本）
+- `SETUP_STATUS.md` 開設の進み具合を記録する表
+- `CLAUDE.md.template` 就業規則の記入用のひな形
+- `.gitignore.template` 変更履歴に残さないものの一覧（第9号）
+- `.claude/settings-template.jsonc` 禁止事項の記入用のひな形（第8号）
+- `.claude/rules/completion.md` 仕事が終わったときの報告の決まり
+- `.claude/rules/work-style.md` 仕事の進め方の決まりと、決めごとの置き場の表
+- `.claude/rules/safety.md` 安全の決まりと、外に出す前の確認
+- `.claude/skills/office-setup/SKILL.md` 開設の進行役
+- `.claude/skills/skill-writing/SKILL.md` AI従業員の増やし方
+- `.claude/skills/fact-check/SKILL.md` 数字や仕様の裏の取り方
+- `.claude/skills/kit-update/SKILL.md` このキットの更新確認
+- `Shared_Assets/README.md` 共通資料の使い方とロゴの置き場
+- `Shared_Assets/Company_Info.md` 会社の基本情報（記入用）
+- `Shared_Assets/Design_Rules.md` デザイン仕様（記入用）
+- `Shared_Assets/Japanese_Writing_Rules.md` 文体の決まり
+- `Shared_Assets/Document_Templates/README.md` 書類のひな形の置き場
+- `Programs/README.md` プログラムの置き場（第9号）
+- `LICENSE` ライセンスと無保証について
+- `VERSION` 版番号
+- `CHANGELOG.md` このファイル

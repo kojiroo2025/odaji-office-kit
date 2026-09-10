@@ -37,7 +37,7 @@
 | `.gitignore.template` | `.gitignore` |
 | `.claude/settings-template.jsonc` | `.claude/settings.json`（**`//` の行を取り除いて有効なJSONにする**） |
 | `.claude/rules/` の3ファイル | `.claude/rules/` |
-| `.claude/skills/` の4フォルダ | `.claude/skills/` |
+| `.claude/skills/` の9フォルダ | `.claude/skills/` |
 | `Shared_Assets/` 一式 | `Shared_Assets/` |
 | `Programs/README.md` | `Programs/` |
 | `SETUP_STATUS.md` | `SETUP_STATUS.md` |

@@ -36,6 +36,11 @@
 - `.claude/skills/skill-writing/SKILL.md` AI従業員の増やし方
 - `.claude/skills/fact-check/SKILL.md` 数字や仕様の裏の取り方
 - `.claude/skills/kit-update/SKILL.md` このキットの更新確認
+- `.claude/skills/connect-check/SKILL.md` 外部サービスとつなぐ前の点検
+- `.claude/skills/automation-setup/SKILL.md` 自動で動く処理の段取り
+- `.claude/skills/office-upkeep/SKILL.md` 決めごとと記録の手入れ
+- `.claude/skills/big-task/SKILL.md` 大きな作業の段取り
+- `.claude/skills/program-writing/SKILL.md` プログラムの書き方
 - `Shared_Assets/README.md` 共通資料の使い方とロゴの置き場
 - `Shared_Assets/Company_Info.md` 会社の基本情報（記入用）
 - `Shared_Assets/Design_Rules.md` デザイン仕様（記入用）

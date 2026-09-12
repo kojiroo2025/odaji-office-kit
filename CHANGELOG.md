@@ -44,7 +44,7 @@
 - `Shared_Assets/README.md` 共通資料の使い方とロゴの置き場
 - `Shared_Assets/Company_Info.md` 会社の基本情報（記入用）
 - `Shared_Assets/Design_Rules.md` デザイン仕様（記入用）
-- `Shared_Assets/Japanese_Writing_Rules.md` 文体の決まり
+- `Shared_Assets/Japanese_Writing_Rules.md` 文章の書き方（①読みやすい日本語 ②専門用語の出し方 ③AIっぽさを避ける ④あなたの書き方＝空欄）
 - `Shared_Assets/Document_Templates/README.md` 書類のひな形の置き場
 - `Programs/README.md` プログラムの置き場（第9号）
 - `LICENSE` ライセンスと無保証について

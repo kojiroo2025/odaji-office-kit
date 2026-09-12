@@ -11,7 +11,7 @@
 
 版番号の上げ方
   一番右の数字（0.1.**0**）＝ 誤字や説明の書き直し。手元に当てなくても困りません
-  真ん中の数字（0.**1**.0）＝ ファイルの追加や中身の変更。当てる価値があります
+  真ん中の数字（0.**1**.0）＝ ファイルの追加や内容の変更。当てる価値があります
   一番左の数字（**0**.1.0）＝ 使い方が変わる大きな改訂。当てる前に説明を読んでください
 
 ---
@@ -30,23 +30,23 @@
 - `.gitignore.template` 変更履歴に残さないものの一覧（第9号）
 - `.claude/settings-template.jsonc` 禁止事項の記入用のひな形（第8号）
 - `.claude/rules/completion.md` 仕事が終わったときの報告の決まり
-- `.claude/rules/work-style.md` 仕事の進め方の決まりと、決めごとの置き場の表
+- `.claude/rules/work-style.md` 仕事の進め方の決まりと、ルールの保存場所の表
 - `.claude/rules/safety.md` 安全の決まりと、外に出す前の確認
 - `.claude/skills/office-setup/SKILL.md` 開設の進行役
 - `.claude/skills/skill-writing/SKILL.md` AI従業員の増やし方
 - `.claude/skills/fact-check/SKILL.md` 数字や仕様の裏の取り方
 - `.claude/skills/kit-update/SKILL.md` このキットの更新確認
 - `.claude/skills/connect-check/SKILL.md` 外部サービスとつなぐ前の点検
-- `.claude/skills/automation-setup/SKILL.md` 自動で動く処理の段取り
-- `.claude/skills/office-upkeep/SKILL.md` 決めごとと記録の手入れ
-- `.claude/skills/big-task/SKILL.md` 大きな作業の段取り
+- `.claude/skills/automation-setup/SKILL.md` 自動で動く処理の工程
+- `.claude/skills/office-upkeep/SKILL.md` ルールと記録の手入れ
+- `.claude/skills/big-task/SKILL.md` 大きな作業の工程
 - `.claude/skills/program-writing/SKILL.md` プログラムの書き方
-- `Shared_Assets/README.md` 共通資料の使い方とロゴの置き場
+- `Shared_Assets/README.md` 共通資料の使い方とロゴの保存場所
 - `Shared_Assets/Company_Info.md` 会社の基本情報（記入用）
 - `Shared_Assets/Design_Rules.md` デザイン仕様（記入用）
 - `Shared_Assets/Japanese_Writing_Rules.md` 文章の書き方（①読みやすい日本語 ②専門用語の出し方 ③AIっぽさを避ける ④あなたの書き方＝空欄）
-- `Shared_Assets/Document_Templates/README.md` 書類のひな形の置き場
-- `Programs/README.md` プログラムの置き場（第9号）
+- `Shared_Assets/Document_Templates/README.md` 書類のひな形の保存場所
+- `Programs/README.md` プログラムの保存場所（第9号）
 - `LICENSE` ライセンスと無保証について
 - `VERSION` 版番号
 - `CHANGELOG.md` このファイル

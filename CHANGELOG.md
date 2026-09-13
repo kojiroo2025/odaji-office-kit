@@ -21,14 +21,21 @@
 初版。ニュースレター「一人社長とAI従業員」の準備編（第2号〜第12号）で
 作ってきたファイルを、一式まとめたものです。
 
+**配り方**：`AI_Office.zip` を展開してできる `AI_Office` フォルダが、
+**そのままデジタルオフィスです。** 中身を別の場所へ置き直す作業はありません。
+すでにご自分で環境を作っている方は、`AI_Office` をご自分のフォルダの中へ入れて、
+見比べる形で使います（手順は `README.md` の「B　すでにあるオフィスに足す」）。
+
 ### 追加
 
 - `README.md` 最初に読む1枚
 - `START_HERE.md` 開設の進め方（AI従業員に読ませる台本）
 - `SETUP_STATUS.md` 開設の進捗を記録する表
-- `CLAUDE.md.template` 就業規則の記入用のひな形
-- `.gitignore.template` 変更履歴に残さないものの一覧（第9号）
-- `.claude/settings-template.jsonc` 禁止事項の記入用のひな形（第8号）
+- `CLAUDE.md` 就業規則。会社ごとの欄は空いています
+- `.gitignore` 変更履歴に残さないものの一覧（第9号）
+- `.claude/settings.json` 禁止事項。どの会社でも止めてよいものだけ、最初から効いています（第8号）
+- `.claude/settings-template.jsonc` 会社に合わせた禁止事項を足すときの見本（第8号）
+- `.claude/OFFICE_KIT_VERSION` 手元の版番号。更新確認に使います
 - `.claude/rules/completion.md` 仕事が終わったときの報告の決まり
 - `.claude/rules/work-style.md` 仕事の進め方の決まりと、ルールの保存場所の表
 - `.claude/rules/safety.md` 安全の決まりと、外に出す前の確認

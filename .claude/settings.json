@@ -27,10 +27,6 @@
       "Read(//**/*credential*)",
       "Read(//**/*token*.json)",
       "Read(//**/*secret*.json)"
-    ],
-    "allow": [
-      "WebFetch(domain:raw.githubusercontent.com)",
-      "WebFetch(domain:github.com)"
     ]
   }
 }

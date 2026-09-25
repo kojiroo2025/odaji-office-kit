@@ -3,7 +3,7 @@
 オフィス開設キットの変更を、新しいバージョンから順に記録します。
 
 このファイルは、キットに入っている「更新確認」（`.claude/skills/kit-update/`）が
-機械的に読みます。次の3つの決まりを守って書きます。
+機械的に読みます。次の3つのルールを守って書きます。
 
 1. 見出しは `## バージョン番号 - 日付` の形にする（つなぎは半角のハイフン）。日付は `YYYY-MM-DD`
 2. 新しいバージョンほど上に書く
@@ -76,9 +76,9 @@ OneDrive へ1時間ごとに写す方法を既定にしました（Google Cloud 
 - `.claude/settings.json` 禁止事項。どの会社でも禁止してよいものだけ、最初から効いています（第8号）
 - `.claude/settings-template.jsonc` 会社に合わせた禁止事項を足すときの見本（第8号）
 - `.claude/OFFICE_KIT_VERSION` 手元のバージョン番号。更新確認に使います
-- `.claude/rules/completion.md` 仕事が終わったときの報告の決まり
-- `.claude/rules/work-style.md` 仕事の進め方の決まりと、ルールの保存場所の表
-- `.claude/rules/safety.md` 安全の決まりと、外に出す前の確認
+- `.claude/rules/completion.md` 仕事が終わったときの報告のルール
+- `.claude/rules/work-style.md` 仕事の進め方のルールと、ルールの保存場所の表
+- `.claude/rules/safety.md` 安全のルールと、外に出す前の確認
 - `.claude/skills/office-setup/SKILL.md` 開設の進行役
 - `.claude/skills/skill-writing/SKILL.md` AI従業員の増やし方
 - `.claude/skills/fact-check/SKILL.md` 数字や仕様の裏の取り方

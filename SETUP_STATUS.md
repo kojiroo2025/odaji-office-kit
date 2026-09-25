@@ -70,7 +70,7 @@
 | | 項目 | 使う場面 | 状態 | **どこで埋まるか** | メモ |
 |---|---|---|---|---|---|
 | 19 | 請求書・見積書：`Company_Info.md` の請求まわりと、`Document_Templates` のテンプレート | 請求書・見積書を初めて作るとき | 未 | `.claude/skills/office-setup/SKILL.md` | |
-| 20 | 資料の作り方：`Design_Rules.md` の**文字の大きさ・見出し・余白・資料の種類ごとの決まり** | 資料を初めて作るとき | 未 | `.claude/skills/office-setup/SKILL.md` | **ロゴと色は「開設の日」の⑪⑫で済ませています。** ここは作り方だけ |
+| 20 | 資料の作り方：`Design_Rules.md` の**文字の大きさ・見出し・余白・資料の種類ごとのルール** | 資料を初めて作るとき | 未 | `.claude/skills/office-setup/SKILL.md` | **ロゴと色は「開設の日」の⑪⑫で済ませています。** ここは作り方だけ |
 | 21 | 資料の作り方：ロゴを**どこに置くか**（表紙・右上・フッターなど） | 同上 | 未 | `.claude/skills/office-setup/SKILL.md` | 画像そのものは⑪。ここは置き方 |
 | 22 | お使いのソフト：就業規則の「よく使うツール・システム」 | 外部サービスにつなぐとき | 未 | `.claude/skills/connect-check/SKILL.md` | つなぐ前の点検と同じ場面なので、そちらで一緒に埋めます |
 | 23 | 社長の文章のくせ：`Japanese_Writing_Rules.md` の ④ | しばらく書かせてから | 未 | `.claude/skills/office-upkeep/SKILL.md` | 急ぎません。書かせてみてから足すのが確実 |

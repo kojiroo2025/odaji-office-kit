@@ -1,0 +1,509 @@
+[
+  {
+    "id": "ok",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/a.pdf",
+      "--password-file",
+      "{tmp}/pw/a.txt"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "パスワードを付けました",
+      "AES-256",
+      "2ページ",
+      "a.pdf",
+      "a.txt"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "ふつうの実行。出力とパスワードのファイルができる。書きかけのファイルは残らない。パスワード（保存先のファイルの2行目）は画面に出ない。パスワードの保存先のフォルダは、なければ作る",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_exists": [
+      "{tmp}/out/a.pdf",
+      "{tmp}/pw/a.txt"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/a.pdf.part"
+    ],
+    "expect_output_hides_line": {
+      "file": "{tmp}/pw/a.txt",
+      "line": 2
+    },
+    "expect_file_contains": [
+      {
+        "file": "{tmp}/out/a.pdf",
+        "text": "/Encrypt"
+      },
+      {
+        "file": "{tmp}/out/a.pdf",
+        "text": "/AESV3"
+      }
+    ],
+    "expect_file_differs": [
+      {
+        "file": "{tmp}/out/a.pdf",
+        "other": "{fixtures}/src.pdf"
+      }
+    ],
+    "expect_file_line_matches": [
+      {
+        "file": "{tmp}/pw/a.txt",
+        "line": 2,
+        "pattern": "[A-HJ-NP-Za-km-z2-9]{16}"
+      }
+    ],
+    "expect_pdf_password": {
+      "pdf": "{tmp}/out/a.pdf",
+      "password_file": "{tmp}/pw/a.txt",
+      "line": 2,
+      "pages": 2
+    }
+  },
+  {
+    "id": "ok_japanese_name",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/見積書 パスワード付き.pdf",
+      "--password-file",
+      "{tmp}/pw/b.txt"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "パスワードを付けました",
+      "見積書 パスワード付き.pdf"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "日本語と空白の入ったファイル名でも作れる",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_exists": [
+      "{tmp}/out/見積書 パスワード付き.pdf",
+      "{tmp}/pw/b.txt"
+    ],
+    "expect_output_hides_line": {
+      "file": "{tmp}/pw/b.txt",
+      "line": 2
+    },
+    "expect_file_contains": [
+      {
+        "file": "{tmp}/out/見積書 パスワード付き.pdf",
+        "text": "/Encrypt"
+      },
+      {
+        "file": "{tmp}/out/見積書 パスワード付き.pdf",
+        "text": "/AESV3"
+      }
+    ],
+    "expect_file_differs": [
+      {
+        "file": "{tmp}/out/見積書 パスワード付き.pdf",
+        "other": "{fixtures}/src.pdf"
+      }
+    ],
+    "expect_file_line_matches": [
+      {
+        "file": "{tmp}/pw/b.txt",
+        "line": 2,
+        "pattern": "[A-HJ-NP-Za-km-z2-9]{16}"
+      }
+    ],
+    "expect_pdf_password": {
+      "pdf": "{tmp}/out/見積書 パスワード付き.pdf",
+      "password_file": "{tmp}/pw/b.txt",
+      "line": 2,
+      "pages": 2
+    }
+  },
+  {
+    "id": "out_exists",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{fixtures}/existing_out.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "出力がすでにある。上書きせずに止まる（テストの材料のフォルダが変わらないことも見る）",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "pwfile_exists",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{fixtures}/existing_file.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "パスワードの保存先がすでにある。上書きせずに止まる",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part"
+    ]
+  },
+  {
+    "id": "out_same_as_src",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{fixtures}/src.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "出力が元と同じ。元の PDF は上書きしない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "pwfile_same_folder",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/out/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "パスワードの保存先が、出力と同じフォルダ（一緒に送ってしまう）",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/out/c.txt"
+    ]
+  },
+  {
+    "id": "pwfile_under_out_folder",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/out/sub/deep/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "パスワードの保存先が、出力のフォルダの下の階層。フォルダも作らない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/out/sub"
+    ]
+  },
+  {
+    "id": "pwfile_same_as_out",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/out/c.pdf"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "パスワードの保存先が、出力と同じファイル",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part"
+    ]
+  },
+  {
+    "id": "src_missing",
+    "args": [
+      "{fixtures}/none.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "元の PDF がない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "src_not_pdf_content",
+    "args": [
+      "{fixtures}/notpdf.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "元が、名前は .pdf だが PDF ではない。パスワードのファイルだけが残らないこと",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "src_not_pdf_name",
+    "args": [
+      "{fixtures}/notes.txt",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "元の名前が .pdf ではない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "out_not_pdf_name",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.docx",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "出力の名前が .pdf ではない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.docx",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "out_folder_missing",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/nodir/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "出力先のフォルダがない。フォルダを勝手に作らない",
+    "setup_dirs": [],
+    "expect_not_exists": [
+      "{tmp}/nodir",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "src_already_encrypted",
+    "args": [
+      "{fixtures}/encrypted.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "元にすでにパスワードが付いている",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "args_unknown",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--password-file",
+      "{tmp}/pw/c.txt",
+      "--dryrun"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "知らない引数（--dryrun）では、何もせずに止まる。ファイルを作らない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "args_abbrev",
+    "args": [
+      "{fixtures}/src.pdf",
+      "--out",
+      "{tmp}/out/c.pdf",
+      "--pass",
+      "{tmp}/pw/c.txt"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "引数の途中までの書き方（--pass）を --password-file として受け付けない。ファイルを作らない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf",
+      "{tmp}/out/c.pdf.part",
+      "{tmp}/pw/c.txt"
+    ]
+  },
+  {
+    "id": "args_no_out",
+    "args": [
+      "{fixtures}/src.pdf"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "--out がない",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": []
+  },
+  {
+    "id": "args_none",
+    "args": [],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "引数なしは、引数の誤り",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": []
+  },
+  {
+    "id": "args_selftest_with_out",
+    "args": [
+      "--selftest",
+      "--out",
+      "{tmp}/out/c.pdf"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "パスワードを付けました"
+    ],
+    "note": "--selftest とほかの引数を一緒に渡したら止まる",
+    "setup_dirs": [
+      "{tmp}/out"
+    ],
+    "expect_not_exists": [
+      "{tmp}/out/c.pdf"
+    ]
+  },
+  {
+    "id": "selftest",
+    "args": [
+      "--selftest"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "自己試験が合格で終わる（外部の部品が入っていること）"
+  }
+]

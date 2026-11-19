@@ -1,0 +1,659 @@
+[
+  {
+    "id": "good",
+    "args": [
+      "{fixtures}/good.xlsx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題なし",
+      "good.xlsx"
+    ],
+    "expect_stdout_not_contains": [
+      "C-1",
+      "C-2",
+      "C-3"
+    ],
+    "note": "問題のないファイル。行の高さ 409（上限ちょうど）と、空白を保つ指定の付いた空白だけの部品は合格"
+  },
+  {
+    "id": "bad_ht_409_5",
+    "args": [
+      "{fixtures}/bad_ht_409_5.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題 1 件",
+      "C-3",
+      "3行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さ 409.5 は、上限 409 を超えている（上限のすぐ上）"
+  },
+  {
+    "id": "ok_ht0",
+    "args": [
+      "{fixtures}/ok_ht0.xlsx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題なし"
+    ],
+    "expect_stdout_not_contains": [
+      "C-3"
+    ],
+    "note": "行の高さ 0 は合格（下限ちょうど）"
+  },
+  {
+    "id": "bad_cols",
+    "args": [
+      "{fixtures}/bad_cols.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題 1 件",
+      "別表",
+      "C-1",
+      "F〜G"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義 F〜G と G が重なっている"
+  },
+  {
+    "id": "bad_order",
+    "args": [
+      "{fixtures}/bad_order.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "逆順",
+      "C-1",
+      "B〜C"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義の順番が逆（E のあとに B〜C）"
+  },
+  {
+    "id": "bad_min_gt_max",
+    "args": [
+      "{fixtures}/bad_min_gt_max.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-1"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義の min が max より大きい"
+  },
+  {
+    "id": "bad_min0",
+    "args": [
+      "{fixtures}/bad_min0.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-1",
+      "min=0"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義の min が 0（範囲外）"
+  },
+  {
+    "id": "bad_max",
+    "args": [
+      "{fixtures}/bad_max.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-1",
+      "max=16385"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義の max が 16385（上限 16384 を超える）"
+  },
+  {
+    "id": "bad_minus",
+    "args": [
+      "{fixtures}/bad_minus.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-1"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "列の定義の min が負の数（数字だけの形ではない）"
+  },
+  {
+    "id": "bad_ws",
+    "args": [
+      "{fixtures}/bad_ws.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "改正点",
+      "C-2",
+      "B3"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "セルの中の文字列に、空白だけの部品が空白を保つ指定なしである"
+  },
+  {
+    "id": "bad_ws_tab",
+    "args": [
+      "{fixtures}/bad_ws_tab.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-2",
+      "C2"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "タブだけの部品も、空白だけの部品として出す"
+  },
+  {
+    "id": "zenkaku",
+    "args": [
+      "{fixtures}/zenkaku.xlsx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題なし"
+    ],
+    "expect_stdout_not_contains": [
+      "C-2"
+    ],
+    "note": "全角スペースだけの部品は、問題にしない（XML の空白ではない）"
+  },
+  {
+    "id": "bad_sst",
+    "args": [
+      "{fixtures}/bad_sst.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "sharedStrings.xml",
+      "C-2",
+      "一覧",
+      "C7"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "共有文字列に空白だけの部品がある。使っているセル（シート名と番地）を出す"
+  },
+  {
+    "id": "bad_sst_unused",
+    "args": [
+      "{fixtures}/bad_sst_unused.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "sharedStrings.xml",
+      "C-2"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "共有文字列に空白だけの部品があり、どのセルも使っていない。それでも問題として出す"
+  },
+  {
+    "id": "ok_sst",
+    "args": [
+      "{fixtures}/ok_sst.xlsx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題なし"
+    ],
+    "expect_stdout_not_contains": [
+      "C-2"
+    ],
+    "note": "共有文字列の空白だけの部品に、空白を保つ指定が付いている"
+  },
+  {
+    "id": "bad_ht",
+    "args": [
+      "{fixtures}/bad_ht.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題 1 件",
+      "高さ",
+      "C-3",
+      "5行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さ 500 が上限 409 を超えている"
+  },
+  {
+    "id": "bad_nan",
+    "args": [
+      "{fixtures}/bad_nan.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-3",
+      "4行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さが nan（0 以上の、限りのある数ではない）"
+  },
+  {
+    "id": "bad_inf",
+    "args": [
+      "{fixtures}/bad_inf.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-3",
+      "4行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さが inf（0 以上の、限りのある数ではない）"
+  },
+  {
+    "id": "bad_neg",
+    "args": [
+      "{fixtures}/bad_neg.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-3",
+      "4行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さが -5（0 以上の、限りのある数ではない）"
+  },
+  {
+    "id": "bad_big",
+    "args": [
+      "{fixtures}/bad_big.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-3",
+      "4行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さが 1e999（0 以上の、限りのある数ではない）"
+  },
+  {
+    "id": "bad_uscore",
+    "args": [
+      "{fixtures}/bad_uscore.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "C-3",
+      "4行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "行の高さが 1_0（0 以上の、限りのある数ではない）"
+  },
+  {
+    "id": "multi",
+    "args": [
+      "{fixtures}/multi.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題 2 件",
+      "一枚目",
+      "C-1",
+      "二枚目",
+      "C-3",
+      "9行目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "2つのシートに、別々の問題がある。すべてのシートを見て、合計の件数を出す"
+  },
+  {
+    "id": "root_nons",
+    "args": [
+      "{fixtures}/root_nons.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの根の要素に名前空間がない。中を見られないので、問題なしにしない"
+  },
+  {
+    "id": "root_other",
+    "args": [
+      "{fixtures}/root_other.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの根の要素が、別の名前空間"
+  },
+  {
+    "id": "root_html",
+    "args": [
+      "{fixtures}/root_html.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの根の要素が worksheet ではない"
+  },
+  {
+    "id": "chart",
+    "args": [
+      "{fixtures}/chart.xlsx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題なし"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "グラフだけのシート（chartsheet）があるファイルは読める"
+  },
+  {
+    "id": "norel",
+    "args": [
+      "{fixtures}/norel.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった",
+      "二枚目"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "2枚目のシートの参照が抜けている。黙って飛ばすと、問題のあるシートを見ずに合格になる"
+  },
+  {
+    "id": "doctype",
+    "args": [
+      "{fixtures}/doctype.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの部品に DOCTYPE がある。読まずに止める"
+  },
+  {
+    "id": "utf16",
+    "args": [
+      "{fixtures}/utf16.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの部品が UTF-16。読まずに止める"
+  },
+  {
+    "id": "missing_part",
+    "args": [
+      "{fixtures}/missing_part.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートの部品そのものが、ファイルの中にない"
+  },
+  {
+    "id": "no_workbook",
+    "args": [
+      "{fixtures}/no_workbook.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "zip だが、xl/workbook.xml がない"
+  },
+  {
+    "id": "no_sheets",
+    "args": [
+      "{fixtures}/no_sheets.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "シートが1つもない"
+  },
+  {
+    "id": "strict",
+    "args": [
+      "{fixtures}/strict.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "Strict Open XML の形式（名前空間が違う）。中に問題があっても見られないので、問題なしにしない"
+  },
+  {
+    "id": "broken",
+    "args": [
+      "{fixtures}/broken.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "zip ではないファイル"
+  },
+  {
+    "id": "missing_file",
+    "args": [
+      "{fixtures}/nothing.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "存在しないファイル"
+  },
+  {
+    "id": "many_good_bad",
+    "args": [
+      "{fixtures}/good.xlsx",
+      "{fixtures}/bad_ht.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題なし",
+      "C-3"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "複数のファイル。1つでも問題があれば 1（いちばん大きい番号で終わる）"
+  },
+  {
+    "id": "many_bad_unreadable",
+    "args": [
+      "{fixtures}/bad_ht.xlsx",
+      "{fixtures}/broken.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "C-3",
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "問題ありと読めないものが混ざれば 2"
+  },
+  {
+    "id": "many_good_unreadable",
+    "args": [
+      "{fixtures}/good.xlsx",
+      "{fixtures}/broken.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "合格と読めないものが混ざれば 2（読めないものを合格にしない）"
+  },
+  {
+    "id": "many_bad_good",
+    "args": [
+      "{fixtures}/bad_ht.xlsx",
+      "{fixtures}/good.xlsx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題なし",
+      "C-3"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "問題のあるファイルが先にあっても 1（最後のファイルの結果ではなく、いちばん大きい番号で終わる）"
+  },
+  {
+    "id": "many_unreadable_good",
+    "args": [
+      "{fixtures}/broken.xlsx",
+      "{fixtures}/good.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "読めないファイルが先にあっても 2（並べる順に左右されない）"
+  },
+  {
+    "id": "many_unreadable_bad",
+    "args": [
+      "{fixtures}/broken.xlsx",
+      "{fixtures}/bad_ht.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった",
+      "C-3"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "読めないファイルのあとに問題のあるファイル。2（読めなかったことを「問題あり」に読み替えない）"
+  },
+  {
+    "id": "args_none",
+    "args": [],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "引数なしは、引数の誤り"
+  },
+  {
+    "id": "args_unknown",
+    "args": [
+      "--nazo",
+      "{fixtures}/good.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題なし"
+    ],
+    "note": "知らない引数は、何もせずに止まる"
+  },
+  {
+    "id": "args_abbrev",
+    "args": [
+      "--self"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "引数の途中までの書き方（--self）を --selftest として受け付けない"
+  },
+  {
+    "id": "args_selftest_with_file",
+    "args": [
+      "--selftest",
+      "{fixtures}/bad_ht.xlsx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "--selftest と検査対象を一緒に渡したら止まる（黙って無視すると、検査していないのに 0 が返る）"
+  },
+  {
+    "id": "selftest",
+    "args": [
+      "--selftest"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "自己試験が合格で終わる"
+  }
+]

@@ -1,0 +1,1176 @@
+[
+  {
+    "id": "same",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/same.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "同じ文は一致。.md は BOM 付き・CRLF（Windows のメモ帳で保存した形）"
+  },
+  {
+    "id": "same_lf",
+    "args": [
+      "--md",
+      "{fixtures}/same_lf.md",
+      "--docx",
+      "{fixtures}/same_lf.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "同じ文は一致。.md は BOM なし・LF"
+  },
+  {
+    "id": "replaced",
+    "args": [
+      "--md",
+      "{fixtures}/replaced.md",
+      "--docx",
+      "{fixtures}/replaced.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "Word 側で1語が置き換わっている"
+  },
+  {
+    "id": "dropped",
+    "args": [
+      "--md",
+      "{fixtures}/dropped.md",
+      "--docx",
+      "{fixtures}/dropped.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "Word 側で最後の1行が抜けている"
+  },
+  {
+    "id": "added",
+    "args": [
+      "--md",
+      "{fixtures}/added.md",
+      "--docx",
+      "{fixtures}/added.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "Word 側に、原稿にない1行が足されている"
+  },
+  {
+    "id": "minus_md",
+    "args": [
+      "--md",
+      "{fixtures}/minus_md.md",
+      "--docx",
+      "{fixtures}/minus_md.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "原稿の「-5%」の - は本文（後ろに空白がないので、箇条書きの記号ではない）"
+  },
+  {
+    "id": "minus_docx",
+    "args": [
+      "--md",
+      "{fixtures}/minus_docx.md",
+      "--docx",
+      "{fixtures}/minus_docx.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "Word 側の - は削らない"
+  },
+  {
+    "id": "hash_text",
+    "args": [
+      "--md",
+      "{fixtures}/hash_text.md",
+      "--docx",
+      "{fixtures}/hash_text.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "原稿の「#1」の # は本文（後ろに空白がない）"
+  },
+  {
+    "id": "bullet_then_minus",
+    "args": [
+      "--md",
+      "{fixtures}/bullet_then_minus.md",
+      "--docx",
+      "{fixtures}/bullet_then_minus.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "箇条書きの記号を1つだけ削る。あとの -5% は本文"
+  },
+  {
+    "id": "numbered",
+    "args": [
+      "--md",
+      "{fixtures}/numbered.md",
+      "--docx",
+      "{fixtures}/numbered.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "番号の箇条書き（1. ）は削る"
+  },
+  {
+    "id": "numbered_4digits",
+    "args": [
+      "--md",
+      "{fixtures}/numbered_4digits.md",
+      "--docx",
+      "{fixtures}/numbered_4digits.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "4けたの番号は、箇条書きの番号として扱わない（本文）"
+  },
+  {
+    "id": "bold",
+    "args": [
+      "--md",
+      "{fixtures}/bold.md",
+      "--docx",
+      "{fixtures}/bold.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "太字の記号（**）は削る"
+  },
+  {
+    "id": "star_bullet",
+    "args": [
+      "--md",
+      "{fixtures}/star_bullet.md",
+      "--docx",
+      "{fixtures}/star_bullet.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "* の箇条書き"
+  },
+  {
+    "id": "nakaguro_bullet",
+    "args": [
+      "--md",
+      "{fixtures}/nakaguro_bullet.md",
+      "--docx",
+      "{fixtures}/nakaguro_bullet.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "行頭の「・」は、後ろに空白がなくても箇条書きの記号"
+  },
+  {
+    "id": "space_in_number",
+    "args": [
+      "--md",
+      "{fixtures}/space_in_number.md",
+      "--docx",
+      "{fixtures}/space_in_number.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "英数字どうしのあいだの空白は残す（1 000 と 1000 は別）"
+  },
+  {
+    "id": "english_words",
+    "args": [
+      "--md",
+      "{fixtures}/english_words.md",
+      "--docx",
+      "{fixtures}/english_words.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "英語の語のあいだの空白は、両側で同じなら一致"
+  },
+  {
+    "id": "english_joined",
+    "args": [
+      "--md",
+      "{fixtures}/english_joined.md",
+      "--docx",
+      "{fixtures}/english_joined.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "英語の語がつながっていれば不一致"
+  },
+  {
+    "id": "space_japanese",
+    "args": [
+      "--md",
+      "{fixtures}/space_japanese.md",
+      "--docx",
+      "{fixtures}/space_japanese.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "日本語のあいだの空白は、違いとして扱わない"
+  },
+  {
+    "id": "label_value",
+    "args": [
+      "--md",
+      "{fixtures}/label_value.md",
+      "--docx",
+      "{fixtures}/label_value.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "値のある行の「：」は本文（削らない）"
+  },
+  {
+    "id": "label_value_same",
+    "args": [
+      "--md",
+      "{fixtures}/label_value_same.md",
+      "--docx",
+      "{fixtures}/label_value_same.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "値のある行は、そのまま一致"
+  },
+  {
+    "id": "label_value_differs",
+    "args": [
+      "--md",
+      "{fixtures}/label_value_differs.md",
+      "--docx",
+      "{fixtures}/label_value_differs.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "字目"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "値のある行で値が違えば不一致（「：」から後ろを見出しの記号として消す実装を、合格にしない）。違う位置（何字目か）も出す"
+  },
+  {
+    "id": "label_half_heading",
+    "args": [
+      "--md",
+      "{fixtures}/label_half_heading.md",
+      "--docx",
+      "{fixtures}/label_half_heading.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "半角の「:」で終わる見出しだけの行も、末尾の「:」を外す"
+  },
+  {
+    "id": "label_half_value_differs",
+    "args": [
+      "--md",
+      "{fixtures}/label_half_value_differs.md",
+      "--docx",
+      "{fixtures}/label_half_value_differs.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "字目"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "半角の「:」のあとに値がある行で、値が違えば不一致（「:」から後ろを消す実装を合格にしない）"
+  },
+  {
+    "id": "label_half_value_kept",
+    "args": [
+      "--md",
+      "{fixtures}/label_half_value_kept.md",
+      "--docx",
+      "{fixtures}/label_half_value_kept.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "値のある行の半角の「:」は本文（削らない）"
+  },
+  {
+    "id": "label_20_chars",
+    "args": [
+      "--md",
+      "{fixtures}/label_20_chars.md",
+      "--docx",
+      "{fixtures}/label_20_chars.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "「：」の前が20字の行は、見出しだけの行（末尾の「：」を外す）"
+  },
+  {
+    "id": "label_21_chars",
+    "args": [
+      "--md",
+      "{fixtures}/label_21_chars.md",
+      "--docx",
+      "{fixtures}/label_21_chars.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "「：」の前が21字の行は、見出しだけの行ではない（「：」を残すので不一致）"
+  },
+  {
+    "id": "label_docx_side",
+    "args": [
+      "--md",
+      "{fixtures}/label_docx_side.md",
+      "--docx",
+      "{fixtures}/label_docx_side.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "見出しだけの行の末尾の「：」は、Word 側にあっても違いとして扱わない"
+  },
+  {
+    "id": "nakaguro_inline",
+    "args": [
+      "--md",
+      "{fixtures}/nakaguro_inline.md",
+      "--docx",
+      "{fixtures}/nakaguro_inline.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "行の途中の「・」は本文"
+  },
+  {
+    "id": "num_then_digit",
+    "args": [
+      "--md",
+      "{fixtures}/num_then_digit.md",
+      "--docx",
+      "{fixtures}/num_then_digit.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "原稿の行頭の「10. 」は番号として削る（後ろが数字でも）。SPEC の「一致になる組」に書いてある動き"
+  },
+  {
+    "id": "bullet_then_percent",
+    "args": [
+      "--md",
+      "{fixtures}/bullet_then_percent.md",
+      "--docx",
+      "{fixtures}/bullet_then_percent.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "原稿の行頭の「- 」は記号として削る（後ろが数字でも）"
+  },
+  {
+    "id": "decimal",
+    "args": [
+      "--md",
+      "{fixtures}/decimal.md",
+      "--docx",
+      "{fixtures}/decimal.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "空白のない「10.5日」の 10. は本文"
+  },
+  {
+    "id": "num_docx_side",
+    "args": [
+      "--md",
+      "{fixtures}/num_docx_side.md",
+      "--docx",
+      "{fixtures}/num_docx_side.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "Word 側の「10. 」は削らない"
+  },
+  {
+    "id": "header_ignored",
+    "args": [
+      "--md",
+      "{fixtures}/header_ignored.md",
+      "--docx",
+      "{fixtures}/header_ignored.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "ヘッダーの文は比べない"
+  },
+  {
+    "id": "footnote_empty",
+    "args": [
+      "--md",
+      "{fixtures}/footnote_empty.md",
+      "--docx",
+      "{fixtures}/footnote_empty.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "脚注の部品があっても、文が入っていなければ比べる"
+  },
+  {
+    "id": "table_cells",
+    "args": [
+      "--md",
+      "{fixtures}/table_cells.md",
+      "--docx",
+      "{fixtures}/table_cells.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "Word の表の中の段落も、本文として順に比べる"
+  },
+  {
+    "id": "title_changed",
+    "args": [
+      "--md",
+      "{fixtures}/title_changed.md",
+      "--docx",
+      "{fixtures}/title_changed.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "タイトルが違えば、ふつうは不一致"
+  },
+  {
+    "id": "title_skip",
+    "args": [
+      "--md",
+      "{fixtures}/title_skip.md",
+      "--docx",
+      "{fixtures}/title_skip.docx",
+      "--skip-title"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致",
+      "原稿の題",
+      "Wordの題"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "--skip-title でタイトルの行を比べない。2つのタイトルを出す（目で確認するため）"
+  },
+  {
+    "id": "title_skip_body_diff",
+    "args": [
+      "--md",
+      "{fixtures}/title_skip.md",
+      "--docx",
+      "{fixtures}/replaced.docx",
+      "--skip-title"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "--skip-title でも、本文が違えば不一致"
+  },
+  {
+    "id": "part_del",
+    "args": [
+      "--md",
+      "{fixtures}/part_del.md",
+      "--docx",
+      "{fixtures}/part_del.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "変更履歴"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：変更履歴（削除）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_ins",
+    "args": [
+      "--md",
+      "{fixtures}/part_ins.md",
+      "--docx",
+      "{fixtures}/part_ins.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "変更履歴"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：変更履歴（挿入）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_move",
+    "args": [
+      "--md",
+      "{fixtures}/part_move.md",
+      "--docx",
+      "{fixtures}/part_move.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "変更履歴"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：変更履歴（移動）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_vanish",
+    "args": [
+      "--md",
+      "{fixtures}/part_vanish.md",
+      "--docx",
+      "{fixtures}/part_vanish.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "隠し文字"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：隠し文字。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_drawing",
+    "args": [
+      "--md",
+      "{fixtures}/part_drawing.md",
+      "--docx",
+      "{fixtures}/part_drawing.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "図形"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：図形・画像。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_pict",
+    "args": [
+      "--md",
+      "{fixtures}/part_pict.md",
+      "--docx",
+      "{fixtures}/part_pict.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "図形"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：図形（古い形）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_textbox",
+    "args": [
+      "--md",
+      "{fixtures}/part_textbox.md",
+      "--docx",
+      "{fixtures}/part_textbox.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "テキストボックス"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：テキストボックス。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_math",
+    "args": [
+      "--md",
+      "{fixtures}/part_math.md",
+      "--docx",
+      "{fixtures}/part_math.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "数式"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：数式。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_sym",
+    "args": [
+      "--md",
+      "{fixtures}/part_sym.md",
+      "--docx",
+      "{fixtures}/part_sym.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "記号の文字"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：記号の文字。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_object",
+    "args": [
+      "--md",
+      "{fixtures}/part_object.md",
+      "--docx",
+      "{fixtures}/part_object.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "埋め込み"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：埋め込み。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_altchunk",
+    "args": [
+      "--md",
+      "{fixtures}/part_altchunk.md",
+      "--docx",
+      "{fixtures}/part_altchunk.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "外部の取り込み"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：外部の取り込み。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_instr",
+    "args": [
+      "--md",
+      "{fixtures}/part_instr.md",
+      "--docx",
+      "{fixtures}/part_instr.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "フィールド"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：フィールド（instrText）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_field",
+    "args": [
+      "--md",
+      "{fixtures}/part_field.md",
+      "--docx",
+      "{fixtures}/part_field.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "フィールド"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：フィールド（fldSimple）。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_nbhyphen",
+    "args": [
+      "--md",
+      "{fixtures}/part_nbhyphen.md",
+      "--docx",
+      "{fixtures}/part_nbhyphen.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "特殊なハイフン"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：改行しないハイフン。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_softhyphen",
+    "args": [
+      "--md",
+      "{fixtures}/part_softhyphen.md",
+      "--docx",
+      "{fixtures}/part_softhyphen.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "特殊なハイフン"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "比べられない部品：行末でだけ出るハイフン。文字は同じでも不一致にする"
+  },
+  {
+    "id": "part_none",
+    "args": [
+      "--md",
+      "{fixtures}/part_none.md",
+      "--docx",
+      "{fixtures}/part_none.docx"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "一致"
+    ],
+    "expect_stdout_not_contains": [
+      "不一致"
+    ],
+    "note": "比べられない部品のないファイル（対照）"
+  },
+  {
+    "id": "side_comment",
+    "args": [
+      "--md",
+      "{fixtures}/side_comment.md",
+      "--docx",
+      "{fixtures}/side_comment.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "comments.xml"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "comments.xml に文が入っている。本文が同じでも不一致にする"
+  },
+  {
+    "id": "side_footnote",
+    "args": [
+      "--md",
+      "{fixtures}/side_footnote.md",
+      "--docx",
+      "{fixtures}/side_footnote.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "footnotes.xml"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "footnotes.xml に文が入っている。本文が同じでも不一致にする"
+  },
+  {
+    "id": "side_endnote",
+    "args": [
+      "--md",
+      "{fixtures}/side_endnote.md",
+      "--docx",
+      "{fixtures}/side_endnote.docx"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "不一致",
+      "endnotes.xml"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "endnotes.xml に文が入っている。本文が同じでも不一致にする"
+  },
+  {
+    "id": "doctype",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/doctype.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "本文の部品に DOCTYPE がある。読まずに止める"
+  },
+  {
+    "id": "utf16",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/utf16.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "本文の部品が UTF-16。読まずに止める"
+  },
+  {
+    "id": "doctype_side",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/doctype_side.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "脚注の部品に DOCTYPE がある"
+  },
+  {
+    "id": "broken",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/broken.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "zip ではない .docx"
+  },
+  {
+    "id": "nodoc",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/nodoc.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "word/document.xml がない"
+  },
+  {
+    "id": "nobody",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/nobody.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "本文（body）の要素がない"
+  },
+  {
+    "id": "badxml",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/badxml.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "本文の部品が XML として読めない"
+  },
+  {
+    "id": "missing_docx",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/none.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "存在しない .docx"
+  },
+  {
+    "id": "missing_md",
+    "args": [
+      "--md",
+      "{fixtures}/none.md",
+      "--docx",
+      "{fixtures}/same.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "存在しない .md"
+  },
+  {
+    "id": "empty_md",
+    "args": [
+      "--md",
+      "{fixtures}/empty.md",
+      "--docx",
+      "{fixtures}/same.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "本文が空の .md（照合できる文がない。合格にしない）"
+  },
+  {
+    "id": "sjis_md",
+    "args": [
+      "--md",
+      "{fixtures}/sjis.md",
+      "--docx",
+      "{fixtures}/same.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "UTF-8 ではない .md（シフト JIS）"
+  },
+  {
+    "id": "args_none",
+    "args": [],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "引数なしは、引数の誤り"
+  },
+  {
+    "id": "args_md_only",
+    "args": [
+      "--md",
+      "{fixtures}/same.md"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "--docx がない"
+  },
+  {
+    "id": "args_unknown",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/same.docx",
+      "--nazo"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "知らない引数は、何もせずに止まる"
+  },
+  {
+    "id": "args_selftest_with_files",
+    "args": [
+      "--selftest",
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/replaced.docx"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "--selftest と照合の引数を一緒に渡したら止まる"
+  },
+  {
+    "id": "args_selftest_with_skip",
+    "args": [
+      "--selftest",
+      "--skip-title"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "--selftest と --skip-title を一緒に渡したら止まる"
+  },
+  {
+    "id": "args_abbrev",
+    "args": [
+      "--md",
+      "{fixtures}/same.md",
+      "--docx",
+      "{fixtures}/same.docx",
+      "--skip"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "一致"
+    ],
+    "note": "引数の途中までの書き方（--skip）を --skip-title として受け付けない"
+  },
+  {
+    "id": "selftest",
+    "args": [
+      "--selftest"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "自己試験が合格で終わる"
+  }
+]

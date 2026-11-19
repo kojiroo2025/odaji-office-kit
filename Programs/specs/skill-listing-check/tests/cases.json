@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "all_present",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本",
+      "手元のスキル=3本",
+      "読んだ記録=1本",
+      "読めなかった記録=0本",
+      "読めなかったスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "description がない",
+      "一覧に名前がない"
+    ],
+    "note": "全スキルに説明が届いている。記録の中の、一覧ではない行・こわれた行（一覧の行ではないもの）は読み飛ばしてよい"
+  },
+  {
+    "id": "desc_lost",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_lost",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "問題のあるスキル=1本",
+      "beta",
+      "description がない"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "beta の説明が消えて、名前だけになっている"
+  },
+  {
+    "id": "newer_lost",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_newer_lost",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "beta"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "同じ記録の中に一覧が2つ。時刻の新しいほう（説明が消えたほう）を採る"
+  },
+  {
+    "id": "newer_full",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_newer_full",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "description がない"
+    ],
+    "note": "同じ記録の中に一覧が2つ。時刻の新しいほう（全部あるほう）を採る"
+  },
+  {
+    "id": "two_files",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_two_files",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "beta",
+      "読んだ記録=2本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "記録が2本。ファイルの順ではなく、一覧の時刻がいちばん新しいものを採る"
+  },
+  {
+    "id": "stale",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_old",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "いちばん新しい一覧が48時間より古い。古い一覧で合格にしない"
+  },
+  {
+    "id": "stale_but_allowed",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_old",
+      "--now",
+      "2026-10-31T12:00:00Z",
+      "--max-age-hours",
+      "400"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "--max-age-hours を 400 にすれば、同じ一覧で判定する"
+  },
+  {
+    "id": "partial_only",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_partial",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧に手元のスキルの8割未満しか載っていない（部分の再送）。全体の一覧として読まない"
+  },
+  {
+    "id": "other_cwd",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_other_cwd",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "ほかのフォルダで始めたセッションの一覧は使わない"
+  },
+  {
+    "id": "other_cwd_newer",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_other_cwd_newer",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "description がない"
+    ],
+    "note": "ほかのフォルダの一覧のほうが新しくても、採らない（このフォルダの一覧で判定する）"
+  },
+  {
+    "id": "no_records",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_empty",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "記録のフォルダに .jsonl が1本もない"
+  },
+  {
+    "id": "no_records_dir",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_none",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "記録のフォルダそのものがない"
+  },
+  {
+    "id": "unreadable_record",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_unreadable",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読んだ記録=1本",
+      "読めなかった記録=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "開けない記録が1本ある（.jsonl という名前のフォルダ）。もう1本が合格の内容でも、合格にしない"
+  },
+  {
+    "id": "broken_listing_line",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_broken_line",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった記録=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧の行（skill_listing を含む行）が JSON として読めない。いちばん新しい一覧かもしれないので、合格にしない"
+  },
+  {
+    "id": "colon_only",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_colon_only",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "alpha",
+      "description がない"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "「- alpha:」のように、コロンだけで説明が空"
+  },
+  {
+    "id": "desc_bullets",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_desc_bullets",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "note"
+    ],
+    "note": "説明の中の箇条書き・手元にないスキルの行は数えない（手元のスキルの名前の行だけを読む）"
+  },
+  {
+    "id": "bad_timestamp",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_bad_ts",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった記録=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧の時刻が読めない。読めなかった記録として数え、判定しない"
+  },
+  {
+    "id": "name_gone",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_five",
+      "--records-dir",
+      "{fixtures}/records_five",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "a5",
+      "一覧に名前がない",
+      "手元のスキル=5本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "5本のうち1本が、一覧に名前ごとない（8割は載っているので、全体の一覧として読む）"
+  },
+  {
+    "id": "manual_only",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_manual",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本",
+      "一覧に出ない設定のスキル=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "manual-only"
+    ],
+    "note": "disable-model-invocation: true のスキルは、一覧に出ないのが正しい。本数だけ出し、名前は出さない"
+  },
+  {
+    "id": "manual_false",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_false",
+      "--records-dir",
+      "{fixtures}/records_with_delta",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "manual-only",
+      "一覧に名前がない",
+      "一覧に出ない設定のスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "disable-model-invocation: false のスキルと、本文の中（フロントマターの外）に true と書いたスキルは、数える"
+  },
+  {
+    "id": "unreadable_skill",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_unreadable",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかったスキル=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "開けない SKILL.md が1本ある。一覧に出るはずかどうかが分からないので、合格にしない"
+  },
+  {
+    "id": "skills_dir_is_file",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_is_file",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかったスキル=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "スキルのフォルダのパスがあるのに、フォルダとして開けない（ファイル。行き先の消えたリンクと同じ扱い）。黙って0本と数えない"
+  },
+  {
+    "id": "no_skills",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_none",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "スキルのフォルダがない（スキル0本）。判定できない"
+  },
+  {
+    "id": "only_manual_skills",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_manual",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧に出るはずのスキルが0本（出ない設定のスキルだけ）"
+  },
+  {
+    "id": "share_below_80",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_five",
+      "--records-dir",
+      "{fixtures}/records_three_of_five",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "5本のうち3本（6割）だけが載った一覧。8割未満なので全体の一覧として読まない"
+  },
+  {
+    "id": "newer_bad_timestamp",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_newer_bad_ts",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった記録=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "時刻の読めない一覧がある。古い一覧（全部ある）で合格にせず、読めなかった記録として数える"
+  },
+  {
+    "id": "newer_content_not_str",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_newer_not_str",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [
+      "読めなかった記録=1本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "本文が文字列ではない一覧がある。古い一覧で合格にせず、読めなかった記録として数える"
+  },
+  {
+    "id": "future_timestamp",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_future",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧の時刻が --now より2時間先（パソコンの時計の狂い）。判定しない"
+  },
+  {
+    "id": "future_small",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_future_small",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "一覧の時刻が --now より30分先。1時間以内の先なら判定する"
+  },
+  {
+    "id": "dup_name_line",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_dup_name",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "beta",
+      "description がない"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "同じ名前の行が2つあるときは、最初の行（説明なし）を採る"
+  },
+  {
+    "id": "share_75",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_four",
+      "--records-dir",
+      "{fixtures}/records_three_of_four",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "4本のうち3本（75%）だけが載った一覧。8割未満なので全体の一覧として読まない"
+  },
+  {
+    "id": "fresh_47h",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_47h",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "一覧が --now の47時間前。48時間以内なので判定する"
+  },
+  {
+    "id": "stale_49h",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_49h",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "一覧が --now の49時間前。48時間を超えているので判定しない"
+  },
+  {
+    "id": "naive_timestamp_utc",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_naive_ts",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "時刻に時間帯の指定がない。UTC として読む（47時間前）。パソコンの時間帯で読むと、境界を越えることがある"
+  },
+  {
+    "id": "other_attachment_type",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_other_type",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "description がない"
+    ],
+    "note": "attachment の type が skill_listing ではない行は、一覧の形で時刻が新しくても、一覧として読まない"
+  },
+  {
+    "id": "two_files_mirror",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_two_files_mirror",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "description がない"
+    ],
+    "note": "two_files の鏡。記録が2本で、時刻の新しい一覧（全部ある）を採る。ファイルを読む順に左右されない"
+  },
+  {
+    "id": "newer_first_in_file",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_newer_first",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "beta"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "1つの記録の中で、新しい時刻の一覧が先にある。行の順ではなく時刻で採る"
+  },
+  {
+    "id": "indented_name_line",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_five",
+      "--records-dir",
+      "{fixtures}/records_indented",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "a5",
+      "一覧に名前がない"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "字下げした「  - a5: 説明」は名前の行ではない（行の全体が「- <名前>」の形の行だけを読む）"
+  },
+  {
+    "id": "manual_variants",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_manual_variants",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本",
+      "一覧に出ない設定のスキル=4本"
+    ],
+    "expect_stdout_not_contains": [
+      "manual-"
+    ],
+    "note": "disable-model-invocation の TRUE・\"true\"・行末のコメント付き、先頭に BOM のある SKILL.md を、一覧に出ない設定として読む"
+  },
+  {
+    "id": "same_name_both",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--skills-dir",
+      "{fixtures}/skills_dup",
+      "--records-dir",
+      "{fixtures}/records_lost",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 1,
+    "expect_stdout_contains": [
+      "beta",
+      "description がない",
+      "一覧に出ない設定のスキル=0本"
+    ],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "同じ名前が、一覧に出るはずのスキルと出ない設定のスキルの両方にある。一覧に出るはずのスキルとして数える"
+  },
+  {
+    "id": "name_from_folder",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_noname",
+      "--skills-dir",
+      "{fixtures}/skills_nofront",
+      "--records-dir",
+      "{fixtures}/records_extra",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [
+      "問題のあるスキル=0本",
+      "手元のスキル=2本"
+    ],
+    "expect_stdout_not_contains": [],
+    "note": "name: のないスキル・フロントマターのないスキルは、フォルダの名前をスキルの名前にする"
+  },
+  {
+    "id": "office_missing",
+    "args": [
+      "--office",
+      "{fixtures}/no_office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "--office のフォルダがない"
+  },
+  {
+    "id": "args_bad_now",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "きのう"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "--now が時刻として読めない"
+  },
+  {
+    "id": "args_bad_age",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_at_now",
+      "--now",
+      "2026-10-31T12:00:00Z",
+      "--max-age-hours",
+      "0"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "--max-age-hours は1以上（一覧は --now と同じ時刻なので、0 を通す実装は合格にしてしまう）"
+  },
+  {
+    "id": "args_unknown",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_ok",
+      "--now",
+      "2026-10-31T12:00:00Z",
+      "--nazo"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "知らない引数は、何もせずに止まる（ほかの引数は合格になる組み合わせ。無視すると 0 になる）"
+  },
+  {
+    "id": "args_abbrev",
+    "args": [
+      "--office",
+      "{fixtures}/office",
+      "--skills-dir",
+      "{fixtures}/skills_base",
+      "--records-dir",
+      "{fixtures}/records_old",
+      "--now",
+      "2026-10-31T12:00:00Z",
+      "--max-age",
+      "400"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [
+      "問題のあるスキル=0本"
+    ],
+    "note": "引数の途中までの書き方（--max-age）を --max-age-hours として受け付けない"
+  },
+  {
+    "id": "args_selftest_with_office",
+    "args": [
+      "--selftest",
+      "--office",
+      "{fixtures}/office"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "--selftest とほかの引数を一緒に渡したら止まる"
+  },
+  {
+    "id": "args_selftest_with_records",
+    "args": [
+      "--selftest",
+      "--records-dir",
+      "{fixtures}/records_ok"
+    ],
+    "expect_exit": 2,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "--selftest とテストのための引数を一緒に渡したら止まる"
+  },
+  {
+    "id": "selftest",
+    "args": [
+      "--selftest"
+    ],
+    "expect_exit": 0,
+    "expect_stdout_contains": [],
+    "expect_stdout_not_contains": [],
+    "note": "自己試験が合格で終わる"
+  }
+]

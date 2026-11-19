@@ -16,6 +16,80 @@
 
 ---
 
+## 0.3.0 - 2026-11-17
+
+**オフィス増築キットとしての最初のバージョンです。** 0.2.0 は配っていないので、0.1.0 をお使いの方は、
+0.2.0 と 0.3.0 の変更をまとめて入れることになります。
+
+**入れ方**：Claude Code に「オフィス増築をしたい」とお伝えください。**最初に `kit-update`（増築の手順）と
+`.claude/kit_history`（キットの元のファイル）を入れることをおすすめします**（`ZOCHIKU.md` の K3-01・K3-02）。
+新しい手順は、キットの元のファイルとお手元を比べて、社長が書き換えたファイルを見分けます。書き換えていない
+ファイルは新しいものに置き換え、書き換えたファイルには変わった節だけを差し込む案を示します。
+1件ずつ選べる単位の一覧は `ZOCHIKU.md` にあります。
+
+**0.1.0 の手順で増築を始めた Claude Code へ**（お手元の `kit-update` が 0.1.0 のときに読む文です）：
+- 新しいバージョンの `VERSION`・`CHANGELOG.md`・`ZOCHIKU.md` は、`AI_Office_新バージョン/★はじめにお読みください/` の中にあります
+- K3-01・K3-02 を入れたら、入れたばかりの `.claude/skills/kit-update/SKILL.md` を読み直し、その STEP 1 から進めてください。`AI_Office_新バージョン` はそのまま使えます（ダウンロードし直す必要はありません）
+- 新しい手順では、`AI_Office_新バージョン` を AIオフィスの中ではなく隣に置きます。中に置かれていたら、新しい手順の STEP 2 に従って、先に隣へ移すことを社長に提案してください（中にある `CLAUDE.md`・ルール・スキルが、読んだ時点で指示として読み込まれるためです）
+
+**まだキットを入れていない方**は、ZIP を展開して README の第1部（または第2部）から始めてください。
+
+**どんな穴を塞ぐ変更か**：これまでの更新確認は、社長が書き換えた箇所とキットが変えた箇所を見分ける材料を
+持っていませんでした。そのため、社長が育てたファイルに変更を入れるときは、その場の判断に頼るしかなく、
+書き換えを古い版と取り違えて上書きを勧めるおそれが残っていました。あわせて、文章のルールの置き換えの表に、
+意味が変わる置き換え（「〜を行います→〜します」を条件なしで行う など）が3つ残っていたのを修正しました。
+
+**1件ずつ入れるときの注意**：
+- `Shared_Assets/Japanese_Writing_Rules.md` を入れるときは、`Shared_Assets/Japanese_Writing_Rules_使う語.md` も一緒に入れてください（本体が参照しています）
+- `Programs/specs/` は、プログラムそのものではなく、テスト付きの仕様です。入れたあと「ブラッシュアップをしましょう」と伝えると、Claude Code が AIオフィスの中にプログラムを作り、テストの材料の全ケースに合格してから使い始めます（`office-brushup` を一緒に入れてください）
+- `pdf-encrypt` の仕様からプログラムを作るときは、外部の部品（pypdf・cryptography）が要ります。入れる前に、Claude Code が承認を求めます
+
+### 追加
+
+- `ZOCHIKU.md` 増築の単位の一覧（1件ずつ「入れる／入れない」を選べる単位。0.2.0 の分を含む）
+- `.claude/kit_history/` キットの各バージョンを配ったときの元のファイル（増築のときに、社長が書き換えた箇所を見分けるために使う）
+- `Shared_Assets/Japanese_Writing_Rules_使う語.md` 場面ごとに使う語・専門用語の説明の文案・名詞と動詞の組み合わせ
+- `Programs/specs/` テスト付きの仕様4件（プログラムは同梱せず、読者の環境で作る）と、仕様の一覧・テストの実行の決まり（`Programs/specs/README.md`）
+- `Programs/specs/xlsx-check/` Excel が修復を求める原因が .xlsx にないかを検査する仕組みの仕様（テストの材料46ケース）
+- `Programs/specs/docx-md-match/` 原稿（.md）から作った Word の本文が原稿と同じかを照合する仕組みの仕様（75ケース）
+- `Programs/specs/skill-listing-check/` スキルの一覧で説明が消えたスキルを検出する仕組みの仕様（49ケース）
+- `Programs/specs/pdf-encrypt/` PDF に AES-256 のパスワードを付けた写しを作る仕組みの仕様（20ケース）
+- `.claude/skills/office-brushup/SKILL.md` 仕様からプログラムを作り、テストの材料の全ケースに合格してから使い始める手順（ブラッシュアップ）
+- `.claude/skills/office-upkeep/SKILL.md` 月に一度の見直しに、作ったプログラムが仕様に追いついているかの確認
+- `.claude/rules/work-style.md` 記事・資料の本文を4段階（構成案→要点→事例→草案）で書く節
+- `.claude/rules/work-style.md` 管理画面やコマンドの作業は、段取りを先に承認してもらう節
+- `.claude/rules/work-style.md` ルールを書くときに、届き方と毎回読み込む量を決める節
+- `.claude/rules/safety.md` お客様の案件のデータを外のサービスに置く前に、契約の保存場所の定めを確かめる
+- `CLAUDE.md` 英語の通知の直後の返事も、日本語で書く
+- `.claude/skills/skill-writing/SKILL.md` 作るスキルの冒頭に書く全体に効くルール2つと、12の問いでの見直し
+- `.claude/skills/skill-writing/SKILL.md` スキルが呼ばれないときに一覧の予算を確かめる手順と、スキルを消す前に事実を移す手順
+- `.claude/skills/office-upkeep/SKILL.md` 月の見直しに、毎回読み込む量・ルールが読まれる場所・スキル一覧の予算・`/doctor prompt-audit` の4項目
+- `.claude/skills/automation-setup/SKILL.md` 定時処理の回数の決め方と、仕事がない回を最初の確認で終える方法
+- `.claude/skills/big-task/SKILL.md` サブエージェントに作業を渡すときの4点（1体に1単位・先にプログラム・モデルの指定・使用量を測る）
+- `.claude/skills/fact-check/SKILL.md` 出典を機械で結び付けたあとに、同じ対象を指しているかを確かめる手順
+
+### 変更
+
+- `.claude/skills/kit-update/SKILL.md` 増築の手順を作り直した（元のファイルとの比較・7つの分類・節ごとの差し込み・バージョンを飛ばしたとき・増築の記録）
+- `.claude/rules/completion.md` 報告の見出しを状態に合わせる。ゴールを達成するまで「すべて完了」と書かない
+- `.claude/rules/completion.md` 判断を求める型に、ゴール・各案のゴールへの寄与・見積りの欄を足した
+- `.claude/rules/work-style.md` おすすめを、受け取る人にとって最適なゴールから逆算して決める形にした
+- `.claude/rules/work-style.md` 指示のファイルの記述が実物と食い違ったら、修正するか報告する
+- `.claude/rules/work-style.md` 意味を決める語を省かない範囲を、設問・表・箇条書き・報告に広げた
+- `Shared_Assets/Japanese_Writing_Rules.md` 書くときの目標と手順・主語と目的語を省略してよいかの判定・図と見出し・語を選ぶ判定・専門用語の説明の区分・AIっぽさの物差しを足した
+- `.claude/skills/automation-setup/SKILL.md` 代わりの材料を使った件数を数える・書き切ってから置き換える・全件が除外されたら知らせる
+- `.claude/skills/program-writing/SKILL.md` 書き込み・送信をするプログラムは知らない引数で止まる。検査のプログラムは直した版をもう一度別の目に読ませる
+- `.claude/skills/fact-check/SKILL.md` ほかの AI には、自分が見た原文と同じものを渡す
+- `README.md` 増築のしかたと、まだキットを入れていない方の入り方
+- `Programs/README.md`・`Shared_Assets/README.md` 新しいファイルの一覧
+
+### 修正
+
+- `Shared_Assets/Japanese_Writing_Rules.md` 「〜を行います→〜します」などの置き換えに、意味が変わらないときだけ置き換える条件を付けた
+- `Shared_Assets/Japanese_Writing_Rules.md` 「資料を記入する」「情報を渡す」などを一律に禁止していた表を、作業の中身で動詞を選ぶ表に直した
+- `Shared_Assets/Japanese_Writing_Rules.md` 漢語を一律に言い換える表を廃止し、文脈で選ぶ形にした
+- `.claude/skills/skill-writing/SKILL.md` 12の問いの3番を、期限からではなく、受け取る人に必要な精度から逆算する形にした
+
 ## 0.2.0 - 2026-09-19
 
 **AIオフィスのバックアップ（進捗の表の17・18）を必須にしました。** Windows では、パソコンに最初から入っている

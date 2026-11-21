@@ -38,8 +38,9 @@ CLAUDE.local.md
 .claude/settings.local.json
 *.p12
 *.pfx
-credentials*.json
-*credentials*.json
+# 名前に credential を含むファイルはすべて（.claude/settings.json の読み取りの禁止と
+# バックアップの除外と同じ形。credentials.json・credential.json・google_credential.yaml も含む）
+*credential*
 *token*.json
 *secret*.json
 client_secret*.json
